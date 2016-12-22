@@ -1,2 +1,2 @@
 # mofron-parts-flowuplabels
-FlowupLabels.js for mofron
+[FlowupLabels.js](https://github.com/ENFOS/FlowupLabels.js) for mofron
