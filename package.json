@@ -1,0 +1,32 @@
+{
+  "name": "mofron-parts-flowuplabels",
+  "version": "0.0.1",
+  "description": "FlowupLabels.js for mofron",
+  "main": "dist/flowuplabels.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies" : {
+    "mofron-parts-inputtext" : "^0.0.8",
+    "mofron-parts-text" : "^0.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simpart/mofron-parts-flowuplabels.git"
+  },
+  "keywords": [
+    "mofron"
+  ],
+  "author": "simparts",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/simpart/mofron-parts-flowuplabels/issues"
+  },
+  "homepage": "https://github.com/simpart/mofron-parts-flowuplabels#readme",
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "webpack": "^1.14.0"
+  }
+}
