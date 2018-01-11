@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-flowuplabels",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "expansion input component for mofron.",
   "main": "dist/flowuplabels.js",
   "scripts": {

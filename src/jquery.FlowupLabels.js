@@ -1,3 +1,4 @@
+let $ = require('jquery');
 (function($) {
 	$.fn.FlowupLabels = function( options ){
 	
@@ -38,4 +39,4 @@
 			}
 		});
 	};
-})( jQuery );
+})( $ );
