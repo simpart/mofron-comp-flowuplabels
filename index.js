@@ -4,66 +4,63 @@
  * @author simpart
  */
 require('./src/jquery.FlowupLabels.js');
-let $      = require('jquery');
-let mf     = require('mofron');
-let Input  = require('mofron-comp-input');
+const $      = require('jquery');
+const mf     = require('mofron');
+const Input  = require('mofron-comp-input');
+const Text   = require('mofron-comp-text');
 
 /**
  * @class mofron.comp.FlowupLabels
  * @brief FlowupLabels class
  */
 mf.comp.FlowupLabels = class extends Input {
-    /**
-     * @param po : (string) default value
-     * @param po : (object) option
-     */
-    constructor (po) {
+    
+    constructor (po, p2) {
         try {
             super();
             this.name('FlowupLabels');
-            this.prmOpt(po);
+            this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    initDomConts (prm) {
+    initDomConts () {
         try {
             
             let label = new mf.Dom({
                 tag       : 'label',
-                target    : this,
+                component : this,
                 className : 'fl_label'
             });
             
             let input = new mf.Dom({
                 tag       : 'input',
-                target    : this,
+                component : this,
                 className : 'fl_input'
             });
             
-            if (null !== prm) {
-                this.label(prm);
-            }
             this.target(label);
-            this.addChild(this.label());
+            this.addChild(new Text(''));
             this.target(input);
             
             /* build dom constructure */
             this.adom().addChild(
                 new mf.Dom({
                     tag       : 'div',
-                    target    : this,
+                    component : this,
                     className : 'FlowupLabels',
                     addChild  : new mf.Dom({
                         tag       : 'div',
-                        target    : this,
+                        component : this,
                         className : 'fl_wrap',
-                        child     : [label, input]
+                        child     : [ label, input ]
                     })
                 })
             );
+            
+            this.mainColor(new mf.Color(85,85,85));
             this.size(150, 48);
         } catch (e) {
             console.error(e.stack);
@@ -98,7 +95,7 @@ mf.comp.FlowupLabels = class extends Input {
                         '.FlowupLabels .fl_input',
                         { 'background'    : 'none'          ,
                           'border'        : 'none'          ,
-                          'border-bottom' : '1px solid #555',
+                          'border-bottom' : '1px solid'     ,
                           'border-radius' : '0'             ,
                           'line-height'   : '22px'          ,
                           'padding'       : '20px 0 0 5px'  ,
@@ -206,6 +203,25 @@ mf.comp.FlowupLabels = class extends Input {
                 this.style({ 'font-size' : val-30 + 'px' });
             }
             this.m_height = val;
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    mainColor (prm) {
+        try {
+            if (undefined === prm) {
+                /* getter */
+                return this.style('border-bottom-color');
+            }
+            /* setter */
+            if (true !== mf.func.isInclude(prm, 'Color')) {
+                throw new Error('invalid parameter');
+            }
+            this.style({
+                'border-bottom-color' : prm.getStyle()
+            });
         } catch (e) {
             console.error(e.stack);
             throw e;
