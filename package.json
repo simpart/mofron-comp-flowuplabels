@@ -1,23 +1,26 @@
 {
   "name": "mofron-comp-flowuplabels",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "expansion input component for mofron.",
   "main": "dist/flowuplabels.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies" : {
-    "jquery"         : ""
+    "mofron-comp-input" : "",
+    "mofron-comp-text" : "",
+    "mofron-effect-border" : "",
+    "mofron-event-focus" : ""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/simpart/mofron-comp-flowuplabels.git"
   },
   "keywords": [
-    "mofron"
+    "front-end"
   ],
   "author": "simparts",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/simpart/mofron-comp-flowuplabels/issues"
   },

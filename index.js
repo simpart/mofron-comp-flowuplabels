@@ -3,11 +3,11 @@
  * @brief  expansion input component
  * @author simpart
  */
-require('./src/jquery.FlowupLabels.js');
-const $      = require('jquery');
 const mf     = require('mofron');
 const Input  = require('mofron-comp-input');
 const Text   = require('mofron-comp-text');
+const Border = require('mofron-effect-border');
+const Focus  = require('mofron-event-focus');
 
 /**
  * @class mofron.comp.FlowupLabels
@@ -28,159 +28,68 @@ mf.comp.FlowupLabels = class extends Input {
     
     initDomConts () {
         try {
-            
-            let label = new mf.Dom({
-                tag       : 'label',
-                component : this,
-                className : 'fl_label'
-            });
-            
+            let label = new mf.Dom({ tag: 'label', component: this, className: 'fl_label' });
             let input = new mf.Dom({
-                tag       : 'input',
-                component : this,
-                className : 'fl_input'
+                tag: 'input', component: this, className: 'fl_input',
+                style: {
+                    'background'         : 'none'        ,
+                    'border'             : 'none'        ,
+                    'line-height'        : '22px'        ,
+                    'padding'            : '20px 0 0 5px',
+                    'position'           : 'absolute'    ,
+                    'top'                : '0'           ,
+                    'left'               : '0'           ,
+                    'right'              : '0'           ,
+                    'bottom'             : '0'           ,
+                    'width'              : '100%'        ,
+                    'z-index'            : '2'           ,
+                    '-webkit-box-sizing' : 'border-box'  ,
+                    '-moz-box-sizing'    : 'border-box'  ,
+                    'box-sizing'         : 'border-box'
+                }
             });
-            
-            this.target(label);
-            this.addChild(new Text(''));
-            this.target(input);
-            
             /* build dom constructure */
             this.adom().addChild(
                 new mf.Dom({
-                    tag       : 'div',
-                    component : this,
-                    className : 'FlowupLabels',
+                    tag: 'div', component: this, className: 'FlowupLabels',
                     addChild  : new mf.Dom({
-                        tag       : 'div',
-                        component : this,
-                        className : 'fl_wrap',
-                        child     : [ label, input ]
+                        tag: 'div', component: this, className: 'fl_wrap', child: [ label, input ],
+                        style: {
+                            'display'            : 'block'     ,
+                            'position'           : 'relative'  ,
+                            '-webkit-box-sizing' : 'border-box',
+                            '-moz-box-sizing'    : 'border-box',
+                            'box-sizing'         : 'border-box'
+                        }
                     })
                 })
             );
             
-            this.mainColor(new mf.Color(85,85,85));
-            this.size(150, 48);
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    initStyle () {
-        try {
-            mf.func.addHeadConts({
-                tag      : 'style',
-                contents : [
-                    mf.func.getStyleConts(
-                        '.FlowupLabels .fl_wrap' ,
-                        { 'margin'             : '12px auto' ,
-                          'display'            : 'block'     ,
-                          'position'           : 'relative'  ,
-                          '-webkit-box-sizing' : 'border-box',
-                          '-moz-box-sizing'    : 'border-box',
-                          'box-sizing'         : 'border-box' }
-                    ),
-                    mf.func.getStyleConts(
-                        '.FlowupLabels .fl_label',
-                        { 'left'     : '5px'       ,
-                          'position' : 'absolute'  ,
-                          'z-index'  : '3'         ,
-                          '-webkit-transition': 'all .05s linear',
-                          '-moz-transition'   : 'all .05s linear',
-                          '-transition'       : 'all .05s linear' }
-                    ),
-                    mf.func.getStyleConts(
-                        '.FlowupLabels .fl_input',
-                        { 'background'    : 'none'          ,
-                          'border'        : 'none'          ,
-                          'border-bottom' : '1px solid'     ,
-                          'border-radius' : '0'             ,
-                          'line-height'   : '22px'          ,
-                          'padding'       : '20px 0 0 5px'  ,
-                          /* Don't change */
-                          'position'           : 'absolute'  ,
-                          'top'                : '0'         ,
-                          'left'               : '0'         ,
-                          'right'              : '0'         ,
-                          'bottom'             : '0'         ,
-                          'width'              : '100%'      ,
-                          'z-index'            : '2'         ,
-                          '-webkit-box-sizing' : 'border-box',
-                          '-moz-box-sizing'    : 'border-box',
-                          'box-sizing'         : 'border-box' }
-                      ),
-                      mf.func.getStyleConts(
-                          '.FlowupLabels .fl_wrap.focused .fl_label,'   + 
-                          '.FlowupLabels .fl_wrap.populated .fl_label,' + 
-                          '.no-js .FlowupLabels .fl_label',
-                          { 'top'       : '0'   ,
-                            'font-size' : '12px',
-                            'color'     : '#555', }
-                      ),
-                      mf.func.getStyleConts(
-                          '.FlowupLabels .fl_wrap.focused .fl_label',
-                          { 'color' : '#00A34D' }
-                      )
-                  ]
-            });
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    afterRender () {
-        try {
-            this.initStyle();
-            $( '#' + this.adom().child()[0].getId() ).FlowupLabels({
-                feature_onInitLoad : true      ,
-                class_focused      : 'focused' ,
-                class_populated    : 'populated'
-            });
-            this.adom().child()[0].child()[0].style({'margin' : '0px'});
+            this.target(label);
+            this.addChild(this.label());
+            this.target(input);
+            this.effect([ new Border({ type: 'bottom', width: '0.01rem' }) ]);
+            this.event([ new Focus(this.focusEvent) ]);
             
-            this.editStyle();
+            this.mainColor([85,85,85]);
+            this.accentColor('#00A34D');
+            this.size('2rem', '0.4rem');
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    editStyle() {
+    focusEvent (p1, p2, p3) {
         try {
-            mf.func.addHeadConts({
-                tag      : 'style',
-                contents : [
-                    mf.func.getStyleConts(
-                        '.FlowupLabels .fl_wrap' ,
-                        { 'height' : this.height() + 'px' }
-                    ),
-                    mf.func.getStyleConts(
-                        '.FlowupLabels .fl_label',
-                        { 'top' : this.height()/4 + 'px' }
-                    )
-                ]
-            });
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    width (val) {
-        try {
-            let FlowupLabels = this.adom().child()[0];
-            let flwrap       = FlowupLabels.child()[0];
-            if (undefined === val) {
-                /* getter */
-                return mf.func.getLength(FlowupLabels.style('width'));
-            }
-            /* setter */
-            let set = {'width' : val + 'px'};
-            FlowupLabels.style(set);
-            flwrap.style(set);
+           if (null !== p1.value()) {
+               return;
+           }
+           let hei = p1.height();
+           p1.label().option({
+               size: (true === p2) ? hei.value()/3 + hei.type() : hei.value()*0.6 + hei.type(),
+               color: (true === p2) ? p1.accentColor() : p1.mainColor()
+           });
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -189,20 +98,34 @@ mf.comp.FlowupLabels = class extends Input {
     
     height (val) {
         try {
-            if (undefined === val) {
-                /* getter */
-                return (undefined !== this.m_height)? this.m_height : null;
+            let ret = this.sizeValue('height', val);
+            if (undefined !== val) {
+                /* setter */
+                let siz = mf.func.getSize(val);
+                this.label().option({ size : siz.value()*0.6 + siz.type() });
+                this.option({ style: { 'font-size' : siz.value()/2 + siz.type() } });
             }
-            /* setter */
-            if ('number' !== typeof val) {
-                throw new Error('invalid parameter');
+            return ret;
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    label (prm) {
+        try {
+            let ret = super.label(prm);
+            if (undefined !== prm) {
+                this.label().option({
+                    sizeValue: ['margin-left', '0.05rem'],
+                    style: {
+                        '-webkit-transition': 'all .05s linear',
+                        '-moz-transition'   : 'all .05s linear',
+                        '-transition'       : 'all .05s linear'
+                    }
+                });
             }
-            this.label().size(null);
-            this.style({ 'height'    : val + 'px' });
-            if (40 < val) {
-                this.style({ 'font-size' : val-30 + 'px' });
-            }
-            this.m_height = val;
+            return ret;
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -216,12 +139,22 @@ mf.comp.FlowupLabels = class extends Input {
                 return this.style('border-bottom-color');
             }
             /* setter */
-            if (true !== mf.func.isInclude(prm, 'Color')) {
-                throw new Error('invalid parameter');
-            }
-            this.style({
-                'border-bottom-color' : prm.getStyle()
-            });
+            let clr = mf.func.getColor(prm);
+            this.style({ 'border-bottom-color' : clr.toString() });
+            this.label().option({ color: clr.toString() });
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    accentColor (prm) {
+        try {
+            return this.member(
+                'accentColor',
+                'string',
+                (undefined !== prm) ? mf.func.getColor(prm).toString() : prm
+            );
         } catch (e) {
             console.error(e.stack);
             throw e;
