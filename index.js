@@ -35,7 +35,7 @@ mf.comp.FlowupLabels = class extends Input {
                     'background'         : 'none'        ,
                     'border'             : 'none'        ,
                     'line-height'        : '22px'        ,
-                    'padding'            : '20px 0 0 5px',
+                    //'padding'            : '20px 0 0 5px',
                     'position'           : 'absolute'    ,
                     'top'                : '0'           ,
                     'left'               : '0'           ,
@@ -86,10 +86,12 @@ mf.comp.FlowupLabels = class extends Input {
                return;
            }
            let hei = p1.height();
-           p1.label().option({
-               size: (true === p2) ? hei.value()/3 + hei.type() : hei.value()*0.6 + hei.type(),
-               color: (true === p2) ? p1.accentColor() : p1.mainColor()
-           });
+           p1.label().size(
+               (true === p2) ? hei.value()/3 + hei.type() : hei.value()*0.6 + hei.type()
+           );
+           p1.label().color(
+               (true === p2) ? p1.accentColor() : p1.mainColor()
+           );
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -105,6 +107,9 @@ mf.comp.FlowupLabels = class extends Input {
                 let siz = mf.func.getSize(val);
                 this.label().option({ size : siz.value()*0.6 + siz.type() });
                 this.option({ style: { 'font-size' : siz.value()/2 + siz.type() } });
+                this.option({
+                    style: { 'padding' : siz.value()*0.4 + siz.type() + ' 0rem 0rem 0.05rem' }
+                });
             }
             return ret;
         } catch (e) {
