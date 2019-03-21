@@ -101,6 +101,7 @@ mf.comp.FlowupLabels = class extends Input {
             let ret = this.sizeValue('height', val);
             if (undefined !== val) {
                 /* setter */
+                this.adom().style({ height: val });
                 let siz = mf.func.getSize(val);
                 this.label().option({ size : siz.value()*0.6 + siz.type() });
                 this.option({ style: { 'font-size' : siz.value()/2 + siz.type() } });
